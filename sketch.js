@@ -1,6 +1,6 @@
 var helicopterImg, bgImg;
 var helicopterSprite, packageSprite;
-var packageBody,boxBottomBody, boxLeftBody, boxRightBody;
+var packageBody,boxBottomBody, boxLeftBody, boxRightBody,wall1,wall2;
 
 const Engine = Matter.Engine;
 const World = Matter.World;
@@ -31,12 +31,16 @@ function setup() {
 	engine = Engine.create();
 	world = engine.world;
 	
-	boxBottomBody = new Box(400, 610, 200,20);
- 	boxLeftBody = new Box(310, 570, 20,100);
- 	boxRightBody = new Box(490, 570, 20,100);
+	boxBottomBody = new Box(400, 610, 100,20);
+ 	boxLeftBody = new Box(340, 570, 20,100);
+ 	boxRightBody = new Box(460, 570, 20,100);
 
-	packageBody = Bodies.circle(helicopterSprite.position.x , 100 , 20 , {restitution:0.4,isStatic:true});
+	packageBody = Bodies.circle(helicopterSprite.position.x , 100 , 20 , {isStatic:true});
 	World.add(world, packageBody);
+	wall1=createSprite(100,350,20,700)
+	wall2=createSprite(700,350,20,700)
+	wall1.visible=false
+	wall2.visible=false
 
 }
 
@@ -47,7 +51,8 @@ function draw() {
 	
 	packageSprite.x= packageBody.position.x 
 	packageSprite.y= packageBody.position.y 
-
+helicopterSprite.bounceOff(wall1)
+helicopterSprite.bounceOff(wall2)
 	boxRightBody.display();
 	boxLeftBody.display();
 	boxBottomBody.display();
